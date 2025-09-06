@@ -17,3 +17,7 @@ Route::get('/nama', function () {
 Route::get('/alamat', function () {
     return "saya dari Bandung";
 });
+
+Route::get('/jurusan', function () {
+    return "Saya memilih prodi komputer";
+});
