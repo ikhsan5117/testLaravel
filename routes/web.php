@@ -13,3 +13,7 @@ Route::get('/hello', function () {
 Route::get('/nama', function () {
     return "Hello, Nama saya Ikhsan";
 });
+
+Route::get('/alamat', function () {
+    return "saya dari Bandung";
+});
