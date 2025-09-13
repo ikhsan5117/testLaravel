@@ -6,18 +6,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/hello', function () {
-    return "Hello World dari Laravel!";
+Route::get('/hello', function (){
+    return "Hello Dunia saya aku";
 });
 
-Route::get('/nama', function () {
-    return "Hello, Nama saya Ikhsan";
-});
+use App\Http\Controllers\MahasiswaController;
 
-Route::get('/alamat', function () {
-    return "saya dari Bandung";
-});
-
-Route::get('/jurusan', function () {
-    return "Saya memilih prodi komputer";
-});
+Route::get('/mahasiswa', [MahasiswaController::class, 'index']);
+Route::post('/mahasiswa', [MahasiswaController::class, 'store']);
