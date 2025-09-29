@@ -17,12 +17,6 @@ class MahasiswaController extends Controller
     // Menyimpan mahasiswa baru
     public function store(Request $request)
     {
-        $request->validate([
-            'nama' => 'required|string|max:255',
-            'nim' => 'required|numeric|unique:mahasiswas,nim',
-            'prodi' => 'required|string|max:255',
-        ]);
-
         Mahasiswa::create($request->only('nama','nim','prodi'));
 
         return redirect()->back()->with('success', 'Data mahasiswa berhasil ditambahkan.');
@@ -38,13 +32,13 @@ class MahasiswaController extends Controller
     // Memperbarui data mahasiswa
     public function update(Request $request, $id)
     {
-        $mhs = Mahasiswa::findOrFail($id);
 
         $request->validate([
-            'nama' => 'required|string|max:255',
-            'nim' => 'required|numeric|unique:mahasiswas,nim,' . $id,
-            'prodi' => 'required|string|max:255',
+            'nama' => 'required',
+            'nim' => 'required',
+            'prodi' => 'required',
         ]);
+        $mhs = Mahasiswa::findOrFail($id);
 
         $mhs->update($request->only('nama','nim','prodi'));
 
