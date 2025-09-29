@@ -2,22 +2,61 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request; 
+use Illuminate\Http\Request;
 use App\Models\Mahasiswa;
-use Illuminate\Support\Facades\Redirect;
 
 class MahasiswaController extends Controller
 {
-    public function index() 
+    // Menampilkan daftar mahasiswa
+    public function index()
     {
         $data = Mahasiswa::all();
         return view('mahasiswa.index', compact('data'));
     }
 
-    public function store(Request $request) 
+    // Menyimpan mahasiswa baru
+    public function store(Request $request)
     {
-        // dd($request->nim); // ini buat debug, bisa dihapus kalau sudah oke
-        Mahasiswa::create($request->only('nama','nim', 'prodi', 'ruangan'));
-        return redirect()->back();
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'nim' => 'required|numeric|unique:mahasiswas,nim',
+            'prodi' => 'required|string|max:255',
+        ]);
+
+        Mahasiswa::create($request->only('nama','nim','prodi'));
+
+        return redirect()->back()->with('success', 'Data mahasiswa berhasil ditambahkan.');
+    }
+
+    // Menampilkan form edit mahasiswa
+    public function edit($id)
+    {
+        $mhs = Mahasiswa::findOrFail($id);
+        return view('mahasiswa.edit', compact('mhs'));
+    }
+
+    // Memperbarui data mahasiswa
+    public function update(Request $request, $id)
+    {
+        $mhs = Mahasiswa::findOrFail($id);
+
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'nim' => 'required|numeric|unique:mahasiswas,nim,' . $id,
+            'prodi' => 'required|string|max:255',
+        ]);
+
+        $mhs->update($request->only('nama','nim','prodi'));
+
+        return redirect()->route('mahasiswa.index')->with('success', 'Data mahasiswa berhasil diperbarui.');
+    }
+
+    // Menghapus mahasiswa
+    public function destroy($id)
+    {
+        $mhs = Mahasiswa::findOrFail($id);
+        $mhs->delete();
+
+        return redirect()->route('mahasiswa.index')->with('success', 'Data mahasiswa berhasil dihapus.');
     }
 }
