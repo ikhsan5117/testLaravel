@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Mahasiswa;
+use Illuminate\Support\Facades\Redirect;
 
 class MahasiswaController extends Controller
 {
@@ -14,43 +15,62 @@ class MahasiswaController extends Controller
         return view('mahasiswa.index', compact('data'));
     }
 
+    public function create()
+    {
+        return view('mahasiswa.create');
+    }
+
+
     // Menyimpan mahasiswa baru
     public function store(Request $request)
     {
-        Mahasiswa::create($request->only('nama','nim','prodi'));
+        $request->validate([
+            'nama' => 'required',
+            'nim' => 'required|unique:mahasiswas,nim',
+            'prodi' => 'required',
+        ]);
 
+        Mahasiswa::create($request->all());
         return redirect()->back()->with('success', 'Data mahasiswa berhasil ditambahkan.');
     }
 
+    public function show(string $id)
+    {
+        $mhs = Mahasiswa::findOrFail($id);
+        return view('mahasiswa.show', compact('mhs'));
+    }
+
+
     // Menampilkan form edit mahasiswa
-    public function edit($id)
+    public function edit(string $id)
     {
         $mhs = Mahasiswa::findOrFail($id);
         return view('mahasiswa.edit', compact('mhs'));
     }
 
     // Memperbarui data mahasiswa
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
 
         $request->validate([
             'nama' => 'required',
-            'nim' => 'required',
+            'nim' => 'required|unique:mahasiswas,nim,' . $id,
             'prodi' => 'required',
         ]);
         $mhs = Mahasiswa::findOrFail($id);
+        $mhs->update($request->all());
 
-        $mhs->update($request->only('nama','nim','prodi'));
-
-        return redirect()->route('mahasiswa.index')->with('success', 'Data mahasiswa berhasil diperbarui.');
+        return redirect()->route('mahasiswa.index')
+                         ->with('success', 'Data mahasiswa berhasil diperbarui.');
     }
 
     // Menghapus mahasiswa
-    public function destroy($id)
+    public function destroy(string $id)
     {
         $mhs = Mahasiswa::findOrFail($id);
         $mhs->delete();
 
-        return redirect()->route('mahasiswa.index')->with('success', 'Data mahasiswa berhasil dihapus.');
+        return redirect()->route('mahasiswa.index')
+                         ->with('success', 'Data mahasiswa berhasil dihapus.');
     }
 }
