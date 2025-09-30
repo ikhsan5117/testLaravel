@@ -10,8 +10,8 @@ class DosenController extends Controller
 {
     public function index()
     {
-        $data = Dosen::all();
-        return view('dosen.index', compact('data'));
+        $dosens = Dosen::all();
+        return view('dosen.index', compact('dosens'));
     }
 
     public function store(Request $request)
