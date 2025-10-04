@@ -14,30 +14,17 @@
 
                     <div class="mb-4">
                         <label class="block text-gray-700">Nama</label>
-                        <input 
-                            type="text" 
-                            name="nama" 
-                            value="{{ old('nama', $mhs->nama) }}"
-                            class="border rounded w-full px-3 py-2"
-                        >
+                        <input type="text" name="nama" value="{{ old('nama', $mhs->nama) }}"
+                               class="border rounded w-full px-3 py-2">
                     </div>
 
                     <div class="mb-4">
                         <label class="block text-gray-700">NIM</label>
-                        <input 
-                            type="text" 
-                            name="nim" 
-                            value="{{ old('nim', $mhs->nim) }}"
-                            class="border rounded w-full px-3 py-2"
-                        >
+                        <input type="text" name="nim" value="{{ old('nim', $mhs->nim) }}"
+                               class="border rounded w-full px-3 py-2">
                     </div>
 
-                    <button 
-                        type="submit" 
-                        class="px-4 py-2 bg-blue-600 text-white rounded"
-                    >
-                        Update
-                    </button>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded">Update</button>
                 </form>
             </div>
         </div>
