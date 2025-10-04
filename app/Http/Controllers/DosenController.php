@@ -2,74 +2,74 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Dosen;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\Request;
 
 class DosenController extends Controller
 {
+    /**
+     * Tampilkan daftar dosen.
+     */
     public function index()
     {
-        $dosens = Dosen::all();
-        return view('dosen.index', compact('dosens'));
+        $data = Dosen::all();
+        return view('dosen.index', compact('data'));
     }
 
-    public function create()
-    {
-        return view('dosen.create');
-    }
-
+    /**
+     * Simpan dosen baru.
+     */
     public function store(Request $request)
     {
         $request->validate([
-            'nama' => 'required|string|max:255',
-            'nidn' => 'required|string|max:20|unique:dosens,nidn',
-            'email' => 'nullable|email|max:255|unique:dosens,email',
-            'telepon' => 'nullable|string|max:15',
+            'nama' => 'required|string|max:100',
+            'nid'  => 'required|string|max:50|unique:dosen,nid',
+            'alamat' => 'nullable|string|max:255',
+            'mata_kuliah' => 'nullable|string|max:100',
         ]);
 
-        Dosen::create($request->all());
+        Dosen::create($request->only(['nama','nid','alamat','mata_kuliah']));
+
         return redirect()->route('dosen.index')
                          ->with('success', 'Dosen berhasil ditambahkan.');
     }
 
-
-    public function show(string $id)
-    {
-        $dosen = Dosen::findOrFail($id);
-        return view('dosen.show', compact('dosen'));
-    }
-
-    public function edit(string $id)
+    /**
+     * Form edit dosen.
+     */
+    public function edit($id)
     {
         $dosen = Dosen::findOrFail($id);
         return view('dosen.edit', compact('dosen'));
     }
 
-    public function update(Request $request, string $id)
+    /**
+     * Update data dosen.
+     */
+    public function update(Request $request, $id)
     {
+        $dosen = Dosen::findOrFail($id);
 
         $request->validate([
-            'nama' => 'required|string|max:255',
-            'nidn' => 'required|string|max:20|unique:dosens,nidn,' . $dosen->id,
-            'email' => 'nullable|email|max:255|unique:dosens,email,' . $dosen->id,
-            'telepon' => 'nullable|string|max:15',
+            'nama' => 'required|string|max:100',
+            'nid'  => 'required|string|max:50|unique:dosen,nid,' . $dosen->id,
+            'alamat' => 'nullable|string|max:255',
+            'mata_kuliah' => 'nullable|string|max:100',
         ]);
 
-        $dosen = Dosen::findOrFail($id);
-        $dosen->update($request->all());
+        $dosen->update($request->only(['nama','nid','alamat','mata_kuliah']));
 
         return redirect()->route('dosen.index')
-                         ->with('success', 'Dosen berhasil diperbarui.');
+                         ->with('success', 'Data dosen berhasil diupdate.');
     }
 
-    public function destroy(string $id)
+    /**
+     * Hapus dosen.
+     */
+    public function destroy($id)
     {
-        $dosen = Dosen::findOrFail($id);
-        $dosen->delete();
-
+        Dosen::destroy($id);
         return redirect()->route('dosen.index')
                          ->with('success', 'Dosen berhasil dihapus.');
     }
-
 }

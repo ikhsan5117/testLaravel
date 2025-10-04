@@ -2,20 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Ruangan extends Model
 {
-    use HasFactory;
-
-    // nama tabel (opsional, kalau sesuai konvensi "ruangans" tidak perlu)
     protected $table = 'ruangans';
 
-    // field yang boleh diisi mass assignment (create/update)
+    // kolom yang bisa di set by user
     protected $fillable = [
+        'kode',
         'nama',
-        'lokasi',
-        'kapasitas',
+        'kapasitas'
     ];
+    
 }
