@@ -3,14 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Mahasiswa;
+use App\Models\Kelas;
 use Illuminate\Http\Request;
 
 class MahasiswaController extends Controller
 {
     public function index()
     {
-        $data = Mahasiswa::all();
-        return view('mahasiswa.index', compact('data'));
+        // $data = Mahasiswa::all();
+        // return view('mahasiswa.index', compact('data'));
+
+        $data = Mahasiswa::with('kelas')->get();
+        $kelas = Kelas::all();
+        return view('mahasiswa.index', compact('data', 'kelas'));
+
     }
 
     public function store(Request $request)
