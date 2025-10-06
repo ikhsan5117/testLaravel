@@ -17,7 +17,6 @@ class Mahasiswa extends Model
         'nama',
         'nim',
         'kelas_id',
-        'ruangan',
     ];
 
     public function kelas()
