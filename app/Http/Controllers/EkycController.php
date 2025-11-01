@@ -111,8 +111,42 @@ class EkycController extends Controller
             $data->file_ijazah = $request->file('file_ijazah')->store('ekyc', 'public');
         }
 
-        $data_>save();
+        $data->save();
 
-        return redirect()->route('ekyc.step3')->with('success', 'Data pendidikan berhasil tersimpan.');
+        return redirect()->route('ekyc.step4')->with('success', 'Data pendidikan berhasil tersimpan, silakan lanjut ke langkah berikutnya.');
+    }
+
+    public function showStep4()
+    {
+        $data = \App\Models\EkycRegistration::where('user_id', auth()->id())->first();
+        return view('ekyc.step4', compact('data'));
+    }
+
+    public function storeStep4(Request $request)
+    {
+        $request->validate([
+            'alamat_domisili' => 'required|string',
+            'provinsi' => 'required|string',
+            'kota_kabupaten' => 'required|string',
+            'kecamatan' => 'required|string',
+            'kode_pos' => 'required|string|max:6',
+            'nama_ibu_kandung' => 'required|string|max:255',
+            'sumber_informasi' => 'required|in:sosmed,kerabat,informasi_kampus',
+        ]);
+
+        $data = \App\Models\EkycRegistration::where('user_id', auth()->id())->first();
+
+        $data->alamat_domisili = $request->alamat_domisili;
+        $data->provinsi = $request->provinsi;
+        $data->kota_kabupaten = $request->kota_kabupaten;
+        $data->kecamatan = $request->kecamatan;
+        $data->kode_pos = $request->kode_pos;
+        $data->nama_ibu_kandung = $request->nama_ibu_kandung;
+        $data->sumber_informasi = $request->sumber_informasi;
+        $data->status = 'submitted';
+
+        $data->save();
+
+        return redirect()->route('dashboard')->with('success', 'E-KYC berhasil diselesaikan! Data Anda akan segera diproses.');
     }
 }

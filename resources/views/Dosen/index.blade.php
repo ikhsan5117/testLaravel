@@ -14,16 +14,16 @@
                     <h3 class="font-semibold text-lg mb-4">Tambah Dosen</h3>
                     <form method="POST" action="{{ route('dosen.store') }}" class="space-y-4">
                         @csrf
-                        <input type="text" name="nid" placeholder="NID Dosen"
-                               class="border-gray-300 rounded-md w-full">
                         <input type="text" name="nama" placeholder="Nama Dosen"
-                               class="border-gray-300 rounded-md w-full">
-                        <input type="text" name="alamat" placeholder="Alamat"
-                               class="border-gray-300 rounded-md w-full">
-                        <input type="text" name="mataKuliah" placeholder="Mata Kuliah"
+                               class="border-gray-300 rounded-md w-full" required>
+                        <input type="text" name="nidn" placeholder="NIDN Dosen"
+                               class="border-gray-300 rounded-md w-full" required>
+                        <input type="email" name="email" placeholder="Email Dosen"
+                               class="border-gray-300 rounded-md w-full" required>
+                        <input type="text" name="telepon" placeholder="Telepon"
                                class="border-gray-300 rounded-md w-full">
                         <button type="submit"
-                                class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                                class="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded hover:from-blue-600 hover:to-purple-700">
                             Simpan
                         </button>
                     </form>
@@ -38,10 +38,10 @@
                         <thead class="bg-gray-200 text-gray-700">
                             <tr>
                                 <th class="px-4 py-2 w-16 text-center">No</th>
-                                <th class="px-4 py-2">NID</th>
+                                <th class="px-4 py-2">NIDN</th>
                                 <th class="px-4 py-2">Nama</th>
-                                <th class="px-4 py-2">Alamat</th>
-                                <th class="px-4 py-2">Mata Kuliah</th>
+                                <th class="px-4 py-2">Email</th>
+                                <th class="px-4 py-2">Telepon</th>
                                 <th class="px-4 py-2 w-40 text-center">Aksi</th>
                             </tr>
                         </thead>
@@ -49,10 +49,10 @@
                             @foreach($data as $item)
                                 <tr>
                                     <td class="border px-4 py-2 text-center">{{ $loop->iteration }}</td>
-                                    <td class="border px-4 py-2">{{ $item->nid }}</td>
+                                    <td class="border px-4 py-2">{{ $item->nidn }}</td>
                                     <td class="border px-4 py-2">{{ $item->nama }}</td>
-                                    <td class="border px-4 py-2">{{ $item->alamat }}</td>
-                                    <td class="border px-4 py-2">{{ $item->mataKuliah }}</td>
+                                    <td class="border px-4 py-2">{{ $item->email }}</td>
+                                    <td class="border px-4 py-2">{{ $item->telepon }}</td>
                                     <td class="border px-4 py-2 text-center">
                                         <a href="{{ route('dosen.edit', $item->id) }}"
                                            class="inline-block px-3 py-1 bg-yellow-500 text-white rounded">

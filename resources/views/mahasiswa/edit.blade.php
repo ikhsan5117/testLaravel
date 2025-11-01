@@ -24,7 +24,7 @@
                                class="border rounded w-full px-3 py-2">
                     </div>
 
-                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded">Update</button>
+                    <button type="submit" class="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded hover:from-blue-600 hover:to-purple-700">Update</button>
                 </form>
             </div>
         </div>

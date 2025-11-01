@@ -14,32 +14,32 @@
                     @method('PUT')
 
                     <div>
-                        <label class="block text-gray-700 font-medium mb-1">NID</label>
-                        <input type="text" name="nid" value="{{ old('nid', $dosen->nid) }}"
-                               class="border rounded w-full px-3 py-2">
+                        <label class="block text-gray-700 font-medium mb-1">NIDN</label>
+                        <input type="text" name="nidn" value="{{ old('nidn', $dosen->nidn) }}"
+                               class="border rounded w-full px-3 py-2" required>
                     </div>
 
                     <div>
                         <label class="block text-gray-700 font-medium mb-1">Nama</label>
                         <input type="text" name="nama" value="{{ old('nama', $dosen->nama) }}"
-                               class="border rounded w-full px-3 py-2">
+                               class="border rounded w-full px-3 py-2" required>
                     </div>
 
                     <div>
-                        <label class="block text-gray-700 font-medium mb-1">Alamat</label>
-                        <textarea name="alamat" rows="3"
-                                  class="border rounded w-full px-3 py-2">{{ old('alamat', $dosen->alamat) }}</textarea>
+                        <label class="block text-gray-700 font-medium mb-1">Email</label>
+                        <input type="email" name="email" value="{{ old('email', $dosen->email) }}"
+                               class="border rounded w-full px-3 py-2" required>
                     </div>
 
                     <div>
-                        <label class="block text-gray-700 font-medium mb-1">Mata Kuliah</label>
-                        <input type="text" name="mataKuliah" value="{{ old('mataKuliah', $dosen->mataKuliah) }}"
+                        <label class="block text-gray-700 font-medium mb-1">Telepon</label>
+                        <input type="text" name="telepon" value="{{ old('telepon', $dosen->telepon) }}"
                                class="border rounded w-full px-3 py-2">
                     </div>
 
                     <div class="flex justify-end">
                         <button type="submit"
-                                class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                                class="px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded hover:from-blue-600 hover:to-purple-700">
                             Update
                         </button>
                     </div>

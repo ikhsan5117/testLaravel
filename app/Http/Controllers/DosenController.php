@@ -23,12 +23,12 @@ class DosenController extends Controller
     {
         $request->validate([
             'nama' => 'required|string|max:100',
-            'nid'  => 'required|string|max:50|unique:dosen,nid',
-            'alamat' => 'nullable|string|max:255',
-            'mata_kuliah' => 'nullable|string|max:100',
+            'nidn'  => 'required|string|max:50|unique:dosens,nidn',
+            'email' => 'required|email|unique:dosens,email',
+            'telepon' => 'nullable|string|max:20',
         ]);
 
-        Dosen::create($request->only(['nama','nid','alamat','mata_kuliah']));
+        Dosen::create($request->only(['nama','nidn','email','telepon']));
 
         return redirect()->route('dosen.index')
                          ->with('success', 'Dosen berhasil ditambahkan.');
@@ -52,12 +52,12 @@ class DosenController extends Controller
 
         $request->validate([
             'nama' => 'required|string|max:100',
-            'nid'  => 'required|string|max:50|unique:dosen,nid,' . $dosen->id,
-            'alamat' => 'nullable|string|max:255',
-            'mata_kuliah' => 'nullable|string|max:100',
+            'nidn'  => 'required|string|max:50|unique:dosens,nidn,' . $dosen->id,
+            'email' => 'required|email|unique:dosens,email,' . $dosen->id,
+            'telepon' => 'nullable|string|max:20',
         ]);
 
-        $dosen->update($request->only(['nama','nid','alamat','mata_kuliah']));
+        $dosen->update($request->only(['nama','nidn','email','telepon']));
 
         return redirect()->route('dosen.index')
                          ->with('success', 'Data dosen berhasil diupdate.');

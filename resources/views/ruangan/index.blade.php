@@ -21,7 +21,7 @@
                         <input type="number" name="kapasitas" placeholder="Kapasitas"
                                class="border-gray-300 rounded-md w-full">
                         <button type="submit"
-                                class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                                class="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded hover:from-blue-600 hover:to-purple-700">
                             Simpan
                         </button>
                     </form>

@@ -31,12 +31,12 @@
                         Ruangan
                     </a>
                     <a href="{{ route('matkul.index') }}"
-                        class="block px-4 py-2 hover:bg-gray-200 {{ request()->routeIs('matkul.*') ? 'bg-gray-200 font-semibold' : '' }}">
-                    MataKuliah
+                        class="block px-4 py-2 rounded hover:bg-gray-200 {{ request()->routeIs('matkul.*') ? 'bg-gray-200 font-semibold' : '' }}">
+                        Mata Kuliah
                     </a>
                     <a href="{{ route('dosen.index') }}"
-                        class="block px-4 py-2 hover:bg-gray-200 {{ request()->routeIs('dosen.*') ? 'bg-gray-200 font-semibold' : '' }}">
-                    Dosen
+                        class="block px-4 py-2 rounded hover:bg-gray-200 {{ request()->routeIs('dosen.*') ? 'bg-gray-200 font-semibold' : '' }}">
+                        Dosen
                     </a>
                     @endif
 

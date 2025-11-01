@@ -1,6 +1,6 @@
 <x-guest-layout>
     <div class="max-w-md mx-auto mt-12 bg-white p-6 rounded-lg shadow">
-        <h2 class="text-x1 font-semibold text-center mb-6">Registrasi Calon Mahasiswa</h2>
+        <h2 class="text-x1 font-semibold text-center mb-6">Registrasi</h2>
 
         @if ($errors->any())
             <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
@@ -12,7 +12,7 @@
             </div>
         @endif
 
-    <form method="POST" action="{{ route('register.mahasiswa') }}">
+    <form method="POST" action="{{ route('register') }}">
         @csrf
 
         <div class="mb-4">
@@ -35,7 +35,7 @@
             <input type="password" name="password_confirmation" class="w-full border-gray-300 rounded-md p-2 focus:ring focus:ring-blue-200" required>
         </div>
 
-        <button type="submit" class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium py-2 rounded-md hover:from-blue-600 hover:to-purple-700 transition">Daftar Sekarang</button>
+        <button type="submit" class="w-full bg-blue-600 text-white font-medium py-2 rounded-md hover:bg-blue-700 transition">Daftar Sekarang</button>
 
         <p class="text-center text-sm mt-4">
             Sudah punya akun?

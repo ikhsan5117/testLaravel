@@ -21,7 +21,7 @@ class RuanganController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'kode' => 'required|unique:ruangan',
+            'kode' => 'required|unique:ruangans',
             'nama' => 'required',
             'kapasitas' => 'required|integer',
         ]);
@@ -38,7 +38,7 @@ class RuanganController extends Controller
     public function update(Request $request, Ruangan $ruangan)
     {
         $request->validate([
-            'kode' => 'required|unique:ruangan,kode,'.$ruangan->id,
+            'kode' => 'required|unique:ruangans,kode,'.$ruangan->id,
             'nama' => 'required',
             'kapasitas' => 'required|integer',
         ]);

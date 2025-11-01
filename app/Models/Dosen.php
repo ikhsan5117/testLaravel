@@ -9,10 +9,10 @@ class Dosen extends Model
     protected $table = 'dosens';
 
     protected $fillable = [
-        'nid',
-            'nama',
-            'alamat',
-            'mata_kuliah'
+        'nama',
+        'nidn',
+        'email',
+        'telepon',
     ];
-    
+
 }

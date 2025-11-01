@@ -41,7 +41,7 @@
             </div>
 
             <div class="flex justify-end">
-                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Lanjut ke Step 2 -> </button>
+                <button type="submit" class="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded hover:from-blue-600 hover:to-purple-700">Lanjut ke Step 2 -> </button>
             </div>
         </form>
     </div>
