@@ -44,6 +44,8 @@ Route::middleware('auth')->group(function () {
 
         Route::get('step4', [EkycController::class, 'showStep4'])->name('ekyc.step4');
         Route::post('step4', [EkycController::class, 'storeStep4'])->name('ekyc.step4.store');
+
+        Route::get('step5', [EkycController::class, 'step5'])->name('ekyc.step5');
     });
 
     Route::resource('ruangan', RuanganController::class)->middleware(['auth']);

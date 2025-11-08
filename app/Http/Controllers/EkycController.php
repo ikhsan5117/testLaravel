@@ -143,10 +143,24 @@ class EkycController extends Controller
         $data->kode_pos = $request->kode_pos;
         $data->nama_ibu_kandung = $request->nama_ibu_kandung;
         $data->sumber_informasi = $request->sumber_informasi;
-        $data->status = 'submitted';
 
+        $data->status = 'submitted';
         $data->save();
 
-        return redirect()->route('dashboard')->with('success', 'E-KYC berhasil diselesaikan! Data Anda akan segera diproses.');
+        return redirect()->route('ekyc.step5')->with('success', 'Registrasi aKYC Anda telah selesai!');
+    }
+
+    public function step5()
+    {
+        $data = EkycRegistration::where('user_id', auth()->id())->first();
+        if (!$data) {
+            return redirect()->route('ekyc.step1')->with('error', 'Data eKYC tidak ditemukan');
+        }
+
+        //Pastikan hanya user dengan status yang bisa melihat halaman ini
+        if ($data->status !== 'submitted') {
+            return redirect()->route('ekyc.step4')->with('error', 'Lengkapi langkah sebelumnya terlebih dahulu sebelum menyelesaikan eKYC');
+    }a
+        return view('ekyc.step5', compact('data'));
     }
 }
