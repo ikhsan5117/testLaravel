@@ -16,21 +16,21 @@
             {{-- Asal SD --}}
             <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700">Asal Sekolah SD</label>
-                <input type="text" name="asal_sd" value="{{ old('asal_sd', $data->asal_sd) }}"
+                <input type="text" name="asal_sd" value="{{ old('asal_sd', $data ? $data->asal_sd : '') }}"
                     class="mt-1 block w-full border-gray-300 rounded-md">
             </div>
 
             {{-- Asal SMP --}}
             <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700">Asal Sekolah SMP</label>
-                <input type="text" name="asal_smp" value="{{ old('asal_smp', $data->asal_smp) }}"
+                <input type="text" name="asal_smp" value="{{ old('asal_smp', $data ? $data->asal_smp : '') }}"
                     class="mt-1 block w-full border-gray-300 rounded-md">
             </div>
 
             {{-- Asal SMA --}}
             <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700">Asal Sekolah SMA</label>
-                <input type="text" name="asal_sma" value="{{ old('asal_sma', $data->asal_sma) }}"
+                <input type="text" name="asal_sma" value="{{ old('asal_sma', $data ? $data->asal_sma : '') }}"
                     class="mt-1 block w-full border-gray-300 rounded-md">
             </div>
 

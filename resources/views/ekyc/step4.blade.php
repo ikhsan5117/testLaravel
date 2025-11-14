@@ -24,7 +24,7 @@
             {{-- Alamat Domisili --}}
             <div class="mb-4">
                 <label class="block text-sm font-medium mb-1">Alamat Domisili Lengkap</label>
-                <textarea name="alamat_domisili" rows="3" class="w-full border-gray-300 rounded-md p-2" placeholder="Masukkan alamat lengkap">{{ old('alamat_domisili', $data->alamat_domisili ?? '') }}</textarea>
+                <textarea name="alamat_domisili" rows="3" class="w-full border-gray-300 rounded-md p-2" placeholder="Masukkan alamat lengkap">{{ old('alamat_domisili', $data ? $data->alamat_domisili : '') }}</textarea>
             </div>
 
             {{-- Provinsi --}}
@@ -32,9 +32,9 @@
                 <label class="block text-sm font-medium mb-1">Provinsi</label>
                 <select name="provinsi" class="w-full border-gray-300 rounded-md p-2" onchange="updateKota()">
                     <option value="">-- Pilih Provinsi --</option>
-                    <option value="Jawa Barat" {{ old('provinsi', $data->provinsi ?? '') == 'Jawa Barat' ? 'selected' : '' }}>Jawa Barat</option>
-                    <option value="Jawa Tengah" {{ old('provinsi', $data->provinsi ?? '') == 'Jawa Tengah' ? 'selected' : '' }}>Jawa Tengah</option>
-                    <option value="Jawa Timur" {{ old('provinsi', $data->provinsi ?? '') == 'Jawa Timur' ? 'selected' : '' }}>Jawa Timur</option>
+                    <option value="Jawa Barat" {{ old('provinsi', $data ? $data->provinsi : '') == 'Jawa Barat' ? 'selected' : '' }}>Jawa Barat</option>
+                    <option value="Jawa Tengah" {{ old('provinsi', $data ? $data->provinsi : '') == 'Jawa Tengah' ? 'selected' : '' }}>Jawa Tengah</option>
+                    <option value="Jawa Timur" {{ old('provinsi', $data ? $data->provinsi : '') == 'Jawa Timur' ? 'selected' : '' }}>Jawa Timur</option>
                 </select>
             </div>
 
@@ -43,12 +43,12 @@
                 <label class="block text-sm font-medium mb-1">Kota/Kabupaten</label>
                 <select name="kota_kabupaten" class="w-full border-gray-300 rounded-md p-2" onchange="updateKecamatan()">
                     <option value="">-- Pilih Kota/Kabupaten --</option>
-                    @if(old('provinsi', $data->provinsi ?? '') == 'Jawa Barat')
-                        <option value="Bandung" {{ old('kota_kabupaten', $data->kota_kabupaten ?? '') == 'Bandung' ? 'selected' : '' }}>Bandung</option>
-                    @elseif(old('provinsi', $data->provinsi ?? '') == 'Jawa Tengah')
-                        <option value="Semarang" {{ old('kota_kabupaten', $data->kota_kabupaten ?? '') == 'Semarang' ? 'selected' : '' }}>Semarang</option>
-                    @elseif(old('provinsi', $data->provinsi ?? '') == 'Jawa Timur')
-                        <option value="Surabaya" {{ old('kota_kabupaten', $data->kota_kabupaten ?? '') == 'Surabaya' ? 'selected' : '' }}>Surabaya</option>
+                    @if(old('provinsi', $data ? $data->provinsi : '') == 'Jawa Barat')
+                        <option value="Bandung" {{ old('kota_kabupaten', $data ? $data->kota_kabupaten : '') == 'Bandung' ? 'selected' : '' }}>Bandung</option>
+                    @elseif(old('provinsi', $data ? $data->provinsi : '') == 'Jawa Tengah')
+                        <option value="Semarang" {{ old('kota_kabupaten', $data ? $data->kota_kabupaten : '') == 'Semarang' ? 'selected' : '' }}>Semarang</option>
+                    @elseif(old('provinsi', $data ? $data->provinsi : '') == 'Jawa Timur')
+                        <option value="Surabaya" {{ old('kota_kabupaten', $data ? $data->kota_kabupaten : '') == 'Surabaya' ? 'selected' : '' }}>Surabaya</option>
                     @endif
                 </select>
             </div>
@@ -58,12 +58,12 @@
                 <label class="block text-sm font-medium mb-1">Kecamatan</label>
                 <select name="kecamatan" class="w-full border-gray-300 rounded-md p-2">
                     <option value="">-- Pilih Kecamatan --</option>
-                    @if(old('kota_kabupaten', $data->kota_kabupaten ?? '') == 'Bandung')
-                        <option value="Coblong" {{ old('kecamatan', $data->kecamatan ?? '') == 'Coblong' ? 'selected' : '' }}>Coblong</option>
-                    @elseif(old('kota_kabupaten', $data->kota_kabupaten ?? '') == 'Semarang')
-                        <option value="Semarang Utara" {{ old('kecamatan', $data->kecamatan ?? '') == 'Semarang Utara' ? 'selected' : '' }}>Semarang Utara</option>
-                    @elseif(old('kota_kabupaten', $data->kota_kabupaten ?? '') == 'Surabaya')
-                        <option value="Genteng" {{ old('kecamatan', $data->kecamatan ?? '') == 'Genteng' ? 'selected' : '' }}>Genteng</option>
+                    @if(old('kota_kabupaten', $data ? $data->kota_kabupaten : '') == 'Bandung')
+                        <option value="Coblong" {{ old('kecamatan', $data ? $data->kecamatan : '') == 'Coblong' ? 'selected' : '' }}>Coblong</option>
+                    @elseif(old('kota_kabupaten', $data ? $data->kota_kabupaten : '') == 'Semarang')
+                        <option value="Semarang Utara" {{ old('kecamatan', $data ? $data->kecamatan : '') == 'Semarang Utara' ? 'selected' : '' }}>Semarang Utara</option>
+                    @elseif(old('kota_kabupaten', $data ? $data->kota_kabupaten : '') == 'Surabaya')
+                        <option value="Genteng" {{ old('kecamatan', $data ? $data->kecamatan : '') == 'Genteng' ? 'selected' : '' }}>Genteng</option>
                     @endif
                 </select>
             </div>
@@ -71,13 +71,13 @@
             {{-- Kode Pos --}}
             <div class="mb-4">
                 <label class="block text-sm font-medium mb-1">Kode Pos</label>
-                <input type="number" name="kode_pos" value="{{ old('kode_pos', $data->kode_pos ?? '') }}" class="w-full border-gray-300 rounded-md p-2" maxlength="6" placeholder="Masukkan kode pos (max 6 digit)">
+                <input type="number" name="kode_pos" value="{{ old('kode_pos', $data ? $data->kode_pos : '') }}" class="w-full border-gray-300 rounded-md p-2" maxlength="6" placeholder="Masukkan kode pos (max 6 digit)">
             </div>
 
             {{-- Nama Ibu Kandung --}}
             <div class="mb-4">
                 <label class="block text-sm font-medium mb-1">Nama Ibu Kandung</label>
-                <input type="text" name="nama_ibu_kandung" value="{{ old('nama_ibu_kandung', $data->nama_ibu_kandung ?? '') }}" class="w-full border-gray-300 rounded-md p-2" placeholder="Masukkan nama ibu kandung">
+                <input type="text" name="nama_ibu_kandung" value="{{ old('nama_ibu_kandung', $data ? $data->nama_ibu_kandung : '') }}" class="w-full border-gray-300 rounded-md p-2" placeholder="Masukkan nama ibu kandung">
             </div>
 
             {{-- Sumber Informasi --}}
@@ -85,9 +85,9 @@
                 <label class="block text-sm font-medium mb-1">Referensi / Sumber Informasi Pendaftaran</label>
                 <select name="sumber_informasi" class="w-full border-gray-300 rounded-md p-2">
                     <option value="">-- Pilih Sumber Informasi --</option>
-                    <option value="sosmed" {{ old('sumber_informasi', $data->sumber_informasi ?? '') == 'sosmed' ? 'selected' : '' }}>Sosial Media</option>
-                    <option value="kerabat" {{ old('sumber_informasi', $data->sumber_informasi ?? '') == 'kerabat' ? 'selected' : '' }}>Kerabat</option>
-                    <option value="informasi_kampus" {{ old('sumber_informasi', $data->sumber_informasi ?? '') == 'informasi_kampus' ? 'selected' : '' }}>Informasi Kampus</option>
+                    <option value="sosmed" {{ old('sumber_informasi', $data ? $data->sumber_informasi : '') == 'sosmed' ? 'selected' : '' }}>Sosial Media</option>
+                    <option value="kerabat" {{ old('sumber_informasi', $data ? $data->sumber_informasi : '') == 'kerabat' ? 'selected' : '' }}>Kerabat</option>
+                    <option value="informasi_kampus" {{ old('sumber_informasi', $data ? $data->sumber_informasi : '') == 'informasi_kampus' ? 'selected' : '' }}>Informasi Kampus</option>
                 </select>
             </div>
 

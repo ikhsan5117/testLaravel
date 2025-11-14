@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MahasiswaController;
-
+use App\Http\Controllers\MatkulController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\Auth\StudentRegisterController;
@@ -51,6 +51,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('ruangan', RuanganController::class)->middleware(['auth']);
     Route::resource('matkul', MatkulController::class)->middleware(['auth']);
     Route::resource('dosen', DosenController::class)->middleware(['auth']);
+    Route::get('ekyc', [EkycController::class, 'index'])->name('ekyc.index')->middleware(['auth']);
 });
 
 require __DIR__.'/auth.php';
