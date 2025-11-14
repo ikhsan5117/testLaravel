@@ -7,6 +7,8 @@ use App\Http\Controllers\DosenController;
 use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\Auth\StudentRegisterController;
 use App\Http\Controllers\EkycController;
+use App\Http\Controllers\Admin\EkycAdminController;
+
 
 use Illuminate\Support\Facades\Route;
 
@@ -46,12 +48,22 @@ Route::middleware('auth')->group(function () {
         Route::post('step4', [EkycController::class, 'storeStep4'])->name('ekyc.step4.store');
 
         Route::get('step5', [EkycController::class, 'step5'])->name('ekyc.step5');
-    });
 
+    });
+    
     Route::resource('ruangan', RuanganController::class)->middleware(['auth']);
     Route::resource('matkul', MatkulController::class)->middleware(['auth']);
     Route::resource('dosen', DosenController::class)->middleware(['auth']);
-    Route::get('ekyc', [EkycController::class, 'index'])->name('ekyc.index')->middleware(['auth']);
+
+    Route::prefix('admin')->group(function () {
+       Route::get('/ekyc', [EkycAdminController::class, 'index'])->name('admin.ekyc.index');
+       Route::get('/ekyc/{id}', [EkycAdminController::class, 'show'])->name('admin.ekyc.show');
+       Route::post('/ekyc/{id}/approve', [EkycAdminController::class, 'verify'])->name('admin.ekyc.verify');
+    });
+
 });
 
+
+
 require __DIR__.'/auth.php';
+    
