@@ -107,13 +107,13 @@
         <h3 class="text-lg font-semibold mb-4"> Alamat Domisili</h3>
         <div class="space-y-3">
             @foreach ([
-                'Alamat Domisili' => $data->alamatDomisili,
+                'Alamat Domisili' => $data->alamat_domisili,
                 'Provinsi' => $data->provinsi,
-                'Kota' => $data->kota,
+                'Kota/Kabupaten' => $data->kota_kabupaten,
                 'Kecamatan' => $data->kecamatan,
                 'Kode Pos' => $data->kode_pos,
                 'Nama Ibu Kandung' => $data->nama_ibu_kandung,
-                'Referensi Sumber' => $data->referensi_sumber
+                'Referensi Sumber' => $data->sumber_informasi
             ] as $label => $value)
                 <div class="flex items-start">
                     <label class="w-48 text-sm font-medium text-gray-700 mt-1">{{ $label }}</label>

@@ -12,8 +12,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Update enum values for 'status' column in 'ekyc_registration' table
-        DB::statement("ALTER TABLE ekyc_registration MODIFY COLUMN status ENUM('draft', 'submitted', 'accepted', 'rejected') DeFAULT 'draft");
+        // Update enum values for 'status' column in 'ekyc_registrations' table
+        DB::statement("ALTER TABLE ekyc_registrations MODIFY COLUMN status ENUM('draft', 'submitted', 'accepted', 'rejected') DEFAULT 'draft'");
     }
 
     /**
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        // Revert enum values for 'status' column in 'ekyc_registration' table
-        DB::statement("ALTER TABLE ekyc_registration MODIFY COLUMN status ENUM('draft', 'submitted') DEFAULT 'draft");
+        // Revert enum values for 'status' column in 'ekyc_registrations' table
+        DB::statement("ALTER TABLE ekyc_registrations MODIFY COLUMN status ENUM('draft', 'submitted') DEFAULT 'draft'");
     }
 };
