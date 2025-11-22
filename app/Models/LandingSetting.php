@@ -1,0 +1,51 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class LandingSetting extends Model
+{
+    protected $table = 'landing_settings';
+
+    protected $fillable = [
+        'key',
+        'value',
+        'type',
+    ];
+
+    // jika ada beberapa setting yang berdiri JSON, cet agar otomatis array/object
+    protected $casts = [
+        // 'value' => 'array' // jangan aktifkan global kalau banyak entry non-json
+    ];
+
+    /** 
+     * Helper static untuk mengambil value cepat
+     * Usage: LandingSetting::getValue('hero_title', 'default');
+     */
+    public static function getValue($key, $default = null)
+    {
+        $record = self::where('key', $key)->first();
+        if (!$record) return $default;
+
+        // jika type json, decode
+        if ($record->type === 'json') {
+            $decoded = json_decode($record->value, true);
+            return $decoded ?? $default;
+        }
+
+        return $setting->value ?? $default;
+    }
+
+    /**
+     * helper untuk set/insert update setting
+     */
+    public static function setValue(string $key, $value, string $type = 'text')
+    {
+        $val = is_array($value) || is_object($value) ? json_encode($value) : $value;
+        return static::updateOrCreate(['key' => $key], [
+            'value' => $val,
+            'type' => $type,
+        ]);
+    }
+}
