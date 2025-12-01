@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class LandingFooterLink extends Model
 {
-    protected $table = 'landing-footer_links';
+    protected $table = 'landing_footer_links';
 
     protected $fillable = [
         'label', 

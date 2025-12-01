@@ -59,24 +59,25 @@
              <!-- konten : banner wording -->
             <div>
                 <h2 class="text-4xl md:text-5xl font-extrabold leading-tight text-gray-900 mb-6">
-                    Kampus Vokasi Terbaik<br />Untuk Masa Depan Karier Anda
+                    {{ $landing['hero_title'] ?? 'Kampus Vokasi Terbaik<br> />Untuk Masa Depan Karer Anda'}}
                 </h2>
                 <p class="text-lg text-gray-600 mb-8">
-                    LP3I hadir dengan fokus pendidikan vokasi yang relevan dengan dunia kerja.
-                    Raih keterampilan praktis dan peluang karier lebih cepat bersama kami.
+                    {!! $landing['hero_subtitle'] ?? 'Solusi Pendidikan Masa Depan !!'}
                 </p>
 
                 <div class="flex gap-4">
                     @if (Route::has('register'))
-                    <a href="{{ route('register') }}" class="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold text-lg hover:bg-blue-700">Daftar Sekarang</a>
+                    <a href="{{ route('register') }}" 
+                    class="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold text-lg hover:bg-blue-700">Daftar Sekarang</a>
                     @endif
-                    <a href="#program" class="px-6 py-3 border border-blue-600 text-blue-600 rounded-lg font-semibold text-lg hover:bg-blue-50">Lihat Program</a>
+                    <a href="#program" 
+                    class="px-6 py-3 border border-blue-600 text-blue-600 rounded-lg font-semibold text-lg hover:bg-blue-50">Lihat Program</a>
                 </div>
             </div>
             <!-- Image -->
             <div class="flex justify-center">
                 <!-- konten : banner image -->
-            <img src="{{ asset('storage/image/landing/hero-lp3i.jpg') }}" class="rounded-xl shadow-lg" />
+            <img src="{{ asset('uploads/' . ($landing['hero_image] ?? 'default-hero.png)) }}" alt="Mahasiswa LP3I class="w-full max-w-2x1 object-cover object-cover rounded-xl shadow-lg" />
         </div>
         </div>
     </section>
@@ -87,21 +88,13 @@
         <div class="max-w-7xl mx-auto px-4 text-center">
             <h3 class="text-3xl font-bold text-gray-900 mb-10">Program Pendidikan</h3>
 
-            <div class="grid md:grid-cols-3 gap-8">
+           <div class="grid md:grid-cols-3 gap-8">
+            @foreach($programs as $program)
                 <div class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-lg transition">
-                    <h4 class="text-xl font-semibold mb-3">Administrasi Bisnis</h4>
-                    <p class="text-gray-600">Belajar pengelolaan bisnis, administrasi perkantoran, dan dunia manajemen modern.</p>
+                    <h4 class="text-xl font-semibold mb-3">{{ $program->name }}</h4>
+                    <p class="text-gray-600">{{ $program->description }}</p>
                 </div>
-
-                <div class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-lg transition">
-                    <h4 class="text-xl font-semibold mb-3">Informatika & Komputer</h4>
-                    <p class="text-gray-600">Program vokasi untuk dunia IT: pemrograman, jaringan, dan data.</p>
-                </div>
-
-                <div class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-lg transition">
-                    <h4 class="text-xl font-semibold mb-3">Digital Marketing</h4>
-                    <p class="text-gray-600">Menguasai strategi pemasaran digital sesuai kebutuhan industri.</p>
-                </div>
+            @endforeach
             </div>
         </div>
     </section>
@@ -155,7 +148,7 @@
         </div>
 
         <p class="text-center text-gray-200 mt-10 text-sm">
-            © 2025 LP3I. Semua Hak Dilindungi.
+            {{ $landing['footer_text'] ?? '@ 2025 LP3I College - All Reghts Reserved' }}
         </p>
     </footer>
 

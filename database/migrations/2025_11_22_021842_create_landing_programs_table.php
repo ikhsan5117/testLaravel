@@ -14,8 +14,11 @@ return new class extends Migration
         Schema::create('landing_programs', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->test('description')->nullable();
-            $table->string('icon')->nullable()->commend('opsional: nama file/icon class atau url');
+            $table->text('description')->nullable();
+            $table->string('label');
+            $table->string('url')->nullable();
+            $table->string('group')->nullable();
+            $table->string('icon')->nullable()->comment('opsional: nama file/icon class atau url');
             $table->integer('position')->default(0)->index();
             $table->boolean('status')->default(true)->index();
             $table->timestamps();

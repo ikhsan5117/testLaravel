@@ -56,13 +56,15 @@ class LandingSeeder extends Seeder
 
         foreach ($programs as $item) {
             LandingProgram::updateOrCreate(
-                ['title' => $item[0]],
-                [
-                    'description' => $item[1],
-                    'image' => $item[2],
-                    'position' => $item[3],
-                    'status' => 1
-                ]
+                ['label' => $item[0]],
+            [
+                'title' => $item[0],
+                'description' => $item[1],
+                'url' => $item[1],
+                'group' => $item[2],
+                'position' => $item[3],
+                'status' => 1
+            ]
             );
         }
 
@@ -70,18 +72,21 @@ class LandingSeeder extends Seeder
         * FOOTER LINKS
         * ================================ */
         $footerLinks = [
-            ['Beranda', '#beranda', 1],
-            ['Program', '#program', 2],
-            ['Tentang', '#tentang', 3],
-            ['Kontak', '#kontak', 4],
-            ['Email: info@lp3i.ac.id', 'mailto:info@lp3i.ac.id', 5],
-            ['Telp: (021) 12345678', 'tel:+622112345678', 6],
+            ['Beranda', '#beranda', 'navigator', 1],
+            ['Program', '#program', 'navigator', 2],
+            ['Tentang', '#tentang', 'navigator', 3],
+            ['Kontak', '#kontak', 'navigator', 4],
+            ['Email: info@lp3i.ac.id', 'mailto:info@lp3i.ac.id', 'contact', 5],
+            ['Telp: (021) 12345678', 'tel:+622112345678', 'contact', 6],
         ];
 
         foreach ($footerLinks as $item) {
             LandingFooterLink::updateOrCreate(
                 ['label' => $item[0]],
-                ['url' => $item[1], 'position' => $item[2], 'status' => 1]
+                ['url' => $item[1], 
+                'position' => $item[3], 
+                'group' => $item[2],
+                'status' => 1]
             );
         }
 
