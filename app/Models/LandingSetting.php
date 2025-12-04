@@ -34,7 +34,7 @@ class LandingSetting extends Model
             return $decoded ?? $default;
         }
 
-        return $setting->value ?? $default;
+        return $record->value ?? $default;
     }
 
     /**

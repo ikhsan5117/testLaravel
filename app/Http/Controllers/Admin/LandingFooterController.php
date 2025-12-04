@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\LandingFooterLink;
 use Illuminate\Http\Request;
 
@@ -47,7 +48,7 @@ LandingFooterLink::create([
 return redirect()->route('admin.landing.footer.index')
 ->with('success', 'Footer link berhasil ditambahkan.');
 }
-}
+
 /**
  * Show form to edit a footer link.
  */
@@ -57,7 +58,9 @@ public function edit($id)
     return view('admin.landing.footer.edit', compact('footer'));
 }
 
-/**Update footer link.*/
+/**
+ * Update footer link.
+ */
 public function update(Request $request, $id)
 {
     $request->validate([
@@ -87,4 +90,5 @@ public function destroy($id)
 
     return redirect()->route('admin.landing.footer.index')
         ->with('success', 'Footer link berhasil dihapus.');
+}
 }

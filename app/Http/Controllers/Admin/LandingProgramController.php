@@ -21,12 +21,17 @@ class LandingProgramController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate();
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'position' => 'required|integer',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
 
         $data = $request->all();
 
         if ($request->hasFile('image')) {
-            $data = $request->file('image')->store('landing/programs', 'public');
+            $data['image'] = $request->file('image')->store('landing/programs', 'public');
         }
 
         LandingProgram::create($data);
@@ -45,14 +50,16 @@ class LandingProgramController extends Controller
         $program = LandingProgram::findOrFail($id);
 
         $request->validate([
-            'title' => 'required',
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
             'position' => 'required|integer',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $data = $request->all();
 
         if ($request->hasFile('image')) {
-            $data = $request->file('image')->store('landing/programs', 'public');
+            $data['image'] = $request->file('image')->store('landing/programs', 'public');
         }
 
         $program->update($data);

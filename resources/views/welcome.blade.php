@@ -23,7 +23,6 @@
             </nav>
 
             <div class="flex gap-3">
-                @if (Route::has('login'))
                 <nav class="flex items-center gap-4">
                     @auth
                     <a
@@ -46,7 +45,6 @@
                     @endif
                     @endauth
                 </nav>
-                @endif
             </div>
         </div>
     </header>
@@ -59,10 +57,10 @@
              <!-- konten : banner wording -->
             <div>
                 <h2 class="text-4xl md:text-5xl font-extrabold leading-tight text-gray-900 mb-6">
-                    {{ $landing['hero_title'] ?? 'Kampus Vokasi Terbaik<br> />Untuk Masa Depan Karer Anda'}}
+                    {!! $landing['hero_title'] ?? 'Kampus Vokasi Terbaik<br>Untuk Masa Depan Karir Anda' !!}
                 </h2>
                 <p class="text-lg text-gray-600 mb-8">
-                    {!! $landing['hero_subtitle'] ?? 'Solusi Pendidikan Masa Depan !!'}
+                    {!! $landing['hero_subtitle'] ?? 'Solusi Pendidikan Masa Depan' !!}
                 </p>
 
                 <div class="flex gap-4">
@@ -77,7 +75,7 @@
             <!-- Image -->
             <div class="flex justify-center">
                 <!-- konten : banner image -->
-            <img src="{{ asset('uploads/' . ($landing['hero_image] ?? 'default-hero.png)) }}" alt="Mahasiswa LP3I class="w-full max-w-2x1 object-cover object-cover rounded-xl shadow-lg" />
+            <img src="{{ asset('uploads/' . ($landing['hero_image'] ?? 'default-hero.png')) }}" alt="Mahasiswa LP3I" class="w-full max-w-2xl object-cover rounded-xl shadow-lg" />
         </div>
         </div>
     </section>
@@ -148,7 +146,7 @@
         </div>
 
         <p class="text-center text-gray-200 mt-10 text-sm">
-            {{ $landing['footer_text'] ?? '@ 2025 LP3I College - All Reghts Reserved' }}
+            {!! $landing['footer_text'] ?? '@ 2025 LP3I College - All Rights Reserved' !!}
         </p>
     </footer>
 
