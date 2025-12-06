@@ -12,6 +12,7 @@ class LandingSetting extends Model
         'key',
         'value',
         'type',
+        'status'
     ];
 
     // jika ada beberapa setting yang berdiri JSON, cet agar otomatis array/object

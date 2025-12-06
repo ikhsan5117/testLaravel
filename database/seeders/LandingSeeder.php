@@ -19,6 +19,7 @@ class LandingSeeder extends Seeder
             ['hero_title', 'Kampus Vokasi Terbaik untuk Masa Depan Karier Anda', 'text'],
             ['hero_subtitle', 'LP3I hadir dengan fokus pada pendidikan vokasi yang relevan dengan dunia kerja. Raih keterampilan praktis dan peluang karier lebih cepat bersama kami.', 'text'],
             ['hero_image', 'landing/hero-lp3i.jpg', 'image'],
+            ['footer_text', '© 2024 LP3I. All rights reserved. Kampus vokasi terdepan untuk masa depan karier Anda.', 'text'],
         ];
 
         foreach ($settings as $item) {

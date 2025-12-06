@@ -15,6 +15,30 @@ class LandingSettingController extends Controller
         return view('admin.landing.settings.index', compact('settings'));
     }
 
+    public function store(Request $request)
+    {
+        $request->validate([
+            'key' => 'required|string',
+            'type' => 'required|string',
+            'value' => 'nullable',
+            'status' => 'required|boolean'
+            
+        ]);
+
+        if ($request->type === 'image' && $request->hasFile('value')) {
+            $value = $request->file('value')->store('landing', 'public');
+        }
+
+        LandingSetting::create([
+            'key' => $request->key,
+            'value' => $value,
+            'type' => $request->type,
+            'status' => $request->status,
+        ]);
+
+        return redirect()->route('admin.landing.settings.index')->with('success', 'Setting created successfully');
+    }
+
     public function edit($id)
     {
         $setting = LandingSetting::findOrFail($id);
