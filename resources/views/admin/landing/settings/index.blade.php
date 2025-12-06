@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div x-data="{ open:false, setting:null }">
+    <div x-data="{ open:false, setting:{} }">
 
 <x-slot name="header">
 <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -68,7 +68,7 @@
             <td class="px-3 py-2 capitalize">{{ $setting->type }}</td>
 
             <td class="px-3 py-2">
-                <span class="{{ $setting->status ? 'text-gren-600' : 'text-gray-500' }}">
+                <span class="{{ $setting->status ? 'text-green-600' : 'text-gray-500' }}">
                     {{ $setting->status ? 'Active' : 'Inactive' }}
                 </span>
             </td>
@@ -99,12 +99,13 @@
     <div class="bg-white dark:bg-gray-800 p-6 rounded-xl w-full max-w-md shadow-2xl"
          @click.away="open = false">
         <h2 class="text-xl font-semibold mb-4"
-            x-text="setting.id ? 'Edit Setting' : 'Tambah Setting'"></h2>
+            x-text="setting && setting.id ? 'Edit Setting' : 'Tambah Setting'"></h2>
 
-        <form method="POST" action="setting.id ? '/admin/landing/settings/' + setting.id : '{{ route('admin.landing.settings.store') }}'"
-              enctype="multipart/form-data">
+        <form method="POST" :action="setting && setting.id ? '/admin/landing/settings/' + setting.id : '{{ route('admin.landing.settings.store') }}'"
+              enctype="multipart/form-data"
+              x-show="setting">
             @csrf
-            <template x-if="setting.id">
+            <template x-if="setting && setting.id">
                 <input type="hidden" name="_method" value="PUT">
             </template>
             <div class="mb-4">
@@ -114,7 +115,7 @@
                        x-model="setting.key">
             </div>
 
-            <template x-if="setting.type == 'image'">
+            <template x-if="setting && setting.type == 'image'">
                 <div class="mb-4">
                     <label class="block font-medium mb-1">Upload Image</label>
                     <input type="file" name="value" class="w-full border rounded px-3 py-2">
@@ -123,7 +124,7 @@
                     </div>
                 </div>
             </template>
-                <template x-if="setting.type !== 'image'">
+                <template x-if="setting && setting.type !== 'image'">
                     <div class="mb-4">
                         <label class="block font-medium mb-1">Value</label>
                         <textarea name="value" rows="5"

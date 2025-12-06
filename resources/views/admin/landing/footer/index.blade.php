@@ -46,8 +46,8 @@
             <td class="border px-4 py-2">{{ $item->label }}</td>
             <td class="border px-4 py-2">{{ $item->url }}</td>
             <td class="border px-4 py-2 text-center">
-                <span class="px-2 py-1 rounded text-white {{ $item->status !== 0 ? 'bg-green-600' : 'bg-red-600'}}">
-                    {{ $item->status !== 0 ? 'Aktif' : 'Nonaktif' }}
+                <span class="{{ $item->status ? 'text-green-600' : 'text-gray-500' }}">
+                    {{ $item->status ? 'Aktif' : 'Nonaktif' }}
                 </span>
             </td>
             <td class="border px-4 py-2 text-center">
