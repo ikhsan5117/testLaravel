@@ -8,8 +8,13 @@ use Illuminate\Http\Request;
 
 class LandingProgramController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        // Handle POST requests for updates (when form submits to index route)
+        if ($request->isMethod('post') && $request->has('id')) {
+            return $this->update($request, $request->id);
+        }
+
         $programs = LandingProgram::orderBy('position')->get();
         return view('admin.landing.program.index', compact('programs'));
     }
@@ -22,9 +27,11 @@ class LandingProgramController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
             'description' => 'required|string',
+            'icon' => 'required|string',
             'position' => 'required|integer',
+            'status' => 'required|boolean',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -50,9 +57,11 @@ class LandingProgramController extends Controller
         $program = LandingProgram::findOrFail($id);
 
         $request->validate([
-            'name' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
             'description' => 'required|string',
+            'icon' => 'required|string',
             'position' => 'required|integer',
+            'status' => 'required|boolean',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 

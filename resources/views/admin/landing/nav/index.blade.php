@@ -43,25 +43,35 @@
             <td class="border px-4 py-2">{{ $item->label }}</td>
             <td class="border px-4 py-2">{{ $item->url }}</td>
             <td class="border px-4 py-2 text-center">
-                <span class="{{ $item->status ? 'text-green-600' : 'text-gray-500' }}">
+                <span class="px-2 py-1 text-sm font-semibold rounded 
+                    {{ $item->status ? 'bg-green-600 text-white' : 'bg-gray-600 text-white' }}">
                     {{ $item->status ? 'Aktif' : 'Nonaktif' }}
                 </span>
             </td>
-            <td class="border px-4 py-2 text-center">
-                <a href="{{ route('admin.landing.navigation.edit', $item->id) }}"
-                    class="px-3 py-1 bg-yellow-500 text-white rounded mr-2">
-                    Edit
-                </a>
-                <form action="{{ route('admin.landing.navigation.destroy', $item->id) }}"
-                    method="POST" class="inline-block">
-                    @csrf @method('DELETE')
-                    <button type="submit"
-                        onclick="return confirm('Hapus link ini?')"
-                        class="px-3 py-1 bg-red-600 text-white rounded">
-                        Hapus
+           <td class="border px-4 py-2">
+                <div class="flex items-center justify-center gap-2">
+                    
+                    {{-- Tombol Edit --}}
+                    <button 
+                        @click="openEditModal({{ $item }})"
+                        class="px-3 py-1 bg-yellow-500 text-white rounded text-sm">
+                        Edit
                     </button>
-                </form>
+
+                    {{-- Tombol Hapus --}}
+                    <form action="{{ route('admin.landing.navigation.destroy', $item->id) }}"
+                        method="POST">
+                        @csrf @method('DELETE')
+                        <button type="submit"
+                            onclick="return confirm('Hapus link ini?')"
+                            class="px-3 py-1 bg-red-600 text-white rounded text-sm">
+                            Hapus
+                        </button>
+                    </form>
+
+                </div>
             </td>
+
         </tr>
         @endforeach
     </tbody>
@@ -157,6 +167,26 @@
                     <option value="0">Nonaktif</option>
                 </select>
             </div>
+
+            <!-- Tombol Batal + Update -->
+                    <div class="flex justify-end gap-2 mt-4">
+                        <button type="button"
+                            @click="showEdit=false"
+                            class="px-4 py-2 bg-gray-600 text-white rounded">
+                            Batal
+                        </button>
+
+                        <button type="submit"
+                            class="px-4 py-2 bg-blue-600 text-white rounded">
+                            Update
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+
             {{-- Alpine Controller--}}
             <script>
             function navPage() {

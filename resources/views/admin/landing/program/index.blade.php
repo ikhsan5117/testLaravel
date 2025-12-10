@@ -55,7 +55,16 @@
                                 </span>
                             </td>
                             <td class="border px-4 py-2 text-center">
-                                <button @click="openEditModal({{ $program }})"
+                                <button @click="openEditModal(JSON.parse($el.dataset.program))"
+                                    data-program="{!! json_encode([
+                                        'id' => $program->id,
+                                        'title' => $program->title,
+                                        'description' => $program->description,
+                                        'icon' => $program->icon,
+                                        'position' => $program->position,
+                                        'status' => $program->status,
+                                        'image' => $program->image
+                                    ], JSON_HEX_QUOT) !!}"
                                     class="px-3 py-1 bg-yellow-500 text-white rounded">
                                     Edit
                                 </button>
@@ -134,7 +143,7 @@
     <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-96">
         <h2 class="text-xl font-semibold mb-4">Edit Program</h2>
         <form method="POST"
-            :action="'/admin/landing/programs/' + editData.id"
+            id="editForm"
             enctype="multipart/form-data"
             class="space-y-4">
             @csrf
@@ -159,33 +168,34 @@
                 <label class="block mb-1">Image (ganti jika perlu)</label>
                 <input type="file" name="image" class="border-gray-300 rounded-md w-full">
                 <template x-if="editData.image">
-                        <img src="'/storage/' + editData.image" class="mt-2 h-20 rounded">
-                    </template>
-                    </div>
-
-                    <div>
-                        <label class="block mb-1">Status</label>
-                        <select name="status" x-model="editData.status" class="border-gray-300 rounded-md w-full">
-                            <option value="1">Aktif</option>
-                            <option value="0">Nonaktif</option>
-                        </select>
-                    </div>
-
-                    < class="flex justify-end gap-2">
-                        <button type="button"
-                                @click="showEdit=false"
-                                class="px-4 py-2 bg-gray-500 text-white rounded">
-                            Batal
-                        </button>
-                        <button type="submit"
-                                class="px-4 py-2 bg-yellow-600 text-white rounded">
-                            Update
-                        </button>
-                    </div>
-                </form>
+                    <img :src="'/storage/' + editData.image" class="mt-2 h-20 rounded">
+                </template>
             </div>
-        </div>
+
+            <div>
+                <label class="block mb-1">Status</label>
+                <select name="status" x-model="editData.status" class="border-gray-300 rounded-md w-full">
+                    <option value="1">Aktif</option>
+                    <option value="0">Nonaktif</option>
+                </select>
+            </div>
+
+            <div class="flex justify-end gap-2">
+                <button type="button"
+                        @click="showEdit=false"
+                        class="px-4 py-2 bg-gray-500 text-white rounded">
+                    Batal
+                </button>
+                <button type="button"
+                        @click="submitEditForm()"
+                        class="px-4 py-2 bg-yellow-600 text-white rounded">
+                    Update
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
+    
 
 {{-- Alpine controller --}}
 <script>
@@ -206,13 +216,20 @@
                     icon: item.icon,
                     position: item.position,
                     status: item.status,
-                    image: item.image ??
+                    image: item.image ?? null
                 };
                 this.showEdit = true;
+            },
+
+            submitEditForm() {
+                const form = document.getElementById('editForm');
+                form.action = '/admin/landing/programs/' + this.editData.id;
+                form.submit();
             }
         };
     }
 </script>
+
 </x-app-layout>
 
 

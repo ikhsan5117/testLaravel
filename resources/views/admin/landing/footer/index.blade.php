@@ -46,27 +46,34 @@
             <td class="border px-4 py-2">{{ $item->label }}</td>
             <td class="border px-4 py-2">{{ $item->url }}</td>
             <td class="border px-4 py-2 text-center">
-                <span class="{{ $item->status ? 'text-green-600' : 'text-gray-500' }}">
+                <span class="px-2 py-1 text-xs font-semibold rounded
+                    {{ $item->status ? 'bg-green-600 text-white' : 'bg-gray-600 text-white' }}">
                     {{ $item->status ? 'Aktif' : 'Nonaktif' }}
                 </span>
             </td>
-            <td class="border px-4 py-2 text-center">
-                {{-- EDIT BUTTON --}}
-                <button @click="openEditModal({{ $item }})"
-                    class="px-3 py-1 bg-yellow-500 text-white rounded mr-2">
-                    Edit
-                </button>
-                {{-- DELETE --}}
-                <form action="{{ route('admin.landing.footer.destroy', $item->id) }}"
-                    method="POST" class="inline-block">
-                    @csrf @method('DELETE')
-                    <button type="submit"
-                        onclick="return confirm('Hapus link ini?')"
-                        class="px-3 py-1 bg-red-600 text-white rounded">
-                        Hapus
+            <td class="border px-4 py-2">
+                <div class="flex items-center justify-center gap-2">
+
+                    {{-- Tombol Edit --}}
+                    <button @click='openEditModal(@json($item))'
+                        class="px-3 py-1 bg-yellow-500 text-white rounded text-sm">
+                        Edit
                     </button>
-                </form>
+
+                    {{-- Tombol Hapus --}}
+                    <form action="{{ route('admin.landing.footer.destroy', $item->id) }}"
+                        method="POST">
+                        @csrf @method('DELETE')
+                        <button type="submit"
+                            onclick="return confirm('Hapus link ini?')"
+                            class="px-3 py-1 bg-red-600 text-white rounded text-sm">
+                            Hapus
+                        </button>
+                    </form>
+
+                </div>
             </td>
+
         </tr>
         @endforeach
     </tbody>
@@ -80,7 +87,7 @@
     <div x-show="showCreate"
             class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50"
             x-transition>
-        <div class="bg-white dark:bg-gray-800 p-6 rounded-1g shadow-lg w-96">
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-96">
             <h2 class="text-xl font-semibold mb-4">Tambah Footer Link</h2>
 
             <form method="POST" action="{{ route('admin.landing.footer.store') }}" class="space-y-4">
@@ -96,6 +103,15 @@
                     <input type="text" name="url" class="border-gray-300 rounded-md w-full">
                 </div>
 
+                <div>
+                    <label class="block mb-1">Group</label>
+                    <select name="group" class="border-gray-300 rounded-md w-full">
+                        <option value="">None</option>
+                        <option value="nav">Navigation</option>
+                        <option value="social">Social</option>
+                        <option value="legal">Legal</option>
+                    </select>
+                </div>
                 <div>
                     <label class="block mb-1">Status</label>
                     <select name="status" class="border-gray-300 rounded-md w-full">
@@ -130,7 +146,7 @@
     <h2 class="text-xl font-semibold mb-4">Edit Footer Link</h2>
 
     <form method="POST"
-        :action="'/admin/landing/footer/' + editData.id"
+        :action="`{{ route('admin.landing.footer.update', ':id') }}`.replace(':id', editData.id)"
         class="space-y-4">
         @csrf
         @method('PUT')
@@ -148,7 +164,24 @@
                 x-model="editData.url"
                 class="border-gray-300 rounded-md w-full">
         </div>
-
+        <div>
+            <label class="block mb-1">Position</label>
+            <input type="number"
+                name="position"
+                x-model="editData.position"
+                class="border-gray-300 rounded-md w-full" required>
+        </div>
+        <div>
+            <label class="block mb-1">Group</label>
+            <select name="group"
+                x-model="editData.group"
+                class="border-gray-300 rounded-md w-full">
+                <option value="">None</option>
+                <option value="nav">Navigation</option>
+                <option value="social">Social</option>
+                <option value="legal">Legal</option>
+            </select>
+        </div>
         <div>
             <label class="block mb-1">Status</label>
             <select name="status"
@@ -179,26 +212,28 @@
 {{-- ALPINE.JS CONTROLLER --}}
 {{-- ------------------------- --}}
 <script>
-    function footerPage() {
-        return {
-            showCreate: false,
-            showEdit: false,
-            editData: {},
+function footerPage() {
+    return {
+        showCreate: false,
+        showEdit: false,
+        editData: {},
 
-            openCreateModal() {
-                this.showCreate = true;
-            },
+        openCreateModal() {
+            this.showCreate = true;
+        },
 
-            openEditModal(item) {
-             this.editData = {
-                    id: item.id,
-                    label: item.label,
-                    url: item.url,
-                    status: item.status,
+        openEditModal(item) {
+            this.editData = {
+                id: item.id,
+                label: item.label,
+                url: item.url,
+                position: item.position,
+                group: item.group,
+                status: item.status,
             };
             this.showEdit = true;
         }
-    };
+    }
 }
 </script>
 

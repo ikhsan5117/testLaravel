@@ -131,10 +131,11 @@
             <div>
                 <h4 class="text-xl font-semibold mb-3">Navigasi</h4>
                 <ul class="space-y-2 text-gray-100">
-                    <li><a href="#beranda" class="hover:underline">Beranda</a></li>
-                    <li><a href="#program" class="hover:underline">Program</a></li>
-                    <li><a href="#tentang" class="hover:underline">Tentang</a></li>
-                    <li><a href="#kontak" class="hover:underline">Kontak</a></li>
+                    @foreach ($footerNav as $itemNav)
+                    <li><a herf="{{ $itemNav->url }}" class="hover:underline">
+                        {{ $itemNav->label }}
+                    </a></li>
+                    @endforeach
                 </ul>
             </div>
 

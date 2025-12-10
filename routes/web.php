@@ -71,7 +71,7 @@ Route::middleware('auth')->group(function () {
 
     /**LANDING PAGE CMS */
     Route::prefix('admin/landing')->name('admin.landing.')->group(function () {
-        route::resource('settings', LandingSettingController::class)->only([
+        Route::resource('settings', LandingSettingController::class)->only([
             'index', 'store', 'edit', 'update'
         ]);
      Route::resource('navigation', LandingNavController::class)->except(['show']);

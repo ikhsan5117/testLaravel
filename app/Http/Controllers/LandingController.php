@@ -29,12 +29,19 @@ class LandingController extends Controller
                 ->get();
         });
 
-        $footer = Cache::remember('landing_footer', 60, function () {
+        $footer = Cache::remember('landing_footer', 5, function () {
             return LandingFooterLink::where('status', 1)
+                ->where('group','!=', Null)
                 ->orderBy('position')
                 ->get();
         });
 
-        return view('welcome', compact('landing', 'programs', 'navigation', 'footer'));
+        $footerNav = Cache::remember('landing_footer', 5, function () {
+            return LandingFooterLink::where('group', 'nav')
+                ->orderBy('position')
+                ->get();
+        });
+
+        return view('welcome', compact('landing', 'programs', 'navigation', 'footer', 'footerNav'));
     }
 }

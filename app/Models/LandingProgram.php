@@ -15,6 +15,7 @@ class LandingProgram extends Model
         'icon',
         'position',
         'status',
+        'image',
     ];
 
     // Scope helper

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\LandingFooterLink;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class LandingFooterController extends Controller
 {
@@ -66,6 +67,8 @@ public function update(Request $request, $id)
     $request->validate([
         'label' => 'required|string|max:100',
         'url' => 'nullable|url|max:255',
+        'position' => 'required|integer',
+        'group' => 'nullable|string|max:50',
         'status' => 'required|boolean'
     ]);
 
@@ -73,8 +76,13 @@ public function update(Request $request, $id)
     $footer->update([
         'label' => $request->label,
         'url' => $request->url,
+        'position' => $request->position,
+        'group' => $request->group,
         'status' => $request->status,
     ]);
+
+    // Clear cache
+    Cache::forget('landing_footer');
 
     return redirect()->route('admin.landing.footer.index')
         ->with('success', 'Footer link berhasil diperbarui.');
