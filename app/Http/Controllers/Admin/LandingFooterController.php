@@ -33,16 +33,19 @@ public function store(Request $request)
 {
 $request->validate([
 'label' => 'required|string|max:100',
-'url' => 'nullable|url|max:255',
+'url' => 'nullable|string|max:255',
+'position' => 'nullable|integer|min:1',
+'group' => 'nullable|string|max:50',
 'status' => 'required|boolean'
 ]);
 
-$position = LandingFooterLink::max('position') + 1;
+$position = $request->position ?? (LandingFooterLink::max('position') + 1);
 
 LandingFooterLink::create([
 'label' => $request->label,
 'url' => $request->url,
 'position' => $position,
+'group' => $request->group,
 'status' => $request->status,
 ]);
 
@@ -66,10 +69,10 @@ public function update(Request $request, $id)
 {
     $request->validate([
         'label' => 'required|string|max:100',
-        'url' => 'nullable|url|max:255',
-        'position' => 'required|integer',
+        'url' => 'nullable|string|max:255',
+        'position' => 'required|integer|min:1',
         'group' => 'nullable|string|max:50',
-        'status' => 'required|boolean'
+        'status' => 'required|boolean',
     ]);
 
     $footer = LandingFooterLink::findOrFail($id);
@@ -98,5 +101,30 @@ public function destroy($id)
 
     return redirect()->route('admin.landing.footer.index')
         ->with('success', 'Footer link berhasil dihapus.');
+}
+
+/**
+ * Reorder footer links.
+ */
+public function reorder(Request $request)
+{
+    $ids = $request->input('ids', []);
+    foreach ($ids as $position => $id) {
+        LandingFooterLink::where('id', $id)->update(['position' => $position + 1]);
+    }
+
+    return response()->json(['success' => true]);
+}
+
+/**
+ * Toggle status of footer link.
+ */
+public function toggleStatus($id)
+{
+    $footer = LandingFooterLink::findOrFail($id);
+    $footer->status = !$footer->status;
+    $footer->save();
+
+    return response()->json(['success' => true, 'status' => $footer->status]);
 }
 }

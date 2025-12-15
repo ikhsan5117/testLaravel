@@ -57,12 +57,14 @@ class LandingSeeder extends Seeder
 
         foreach ($programs as $item) {
             LandingProgram::updateOrCreate(
-                ['label' => $item[0]],
+                ['title' => $item[0]],
             [
                 'title' => $item[0],
                 'description' => $item[1],
-                'url' => $item[1],
-                'group' => $item[2],
+                'label' => $item[0],
+                'url' => null,
+                'group' => null,
+                'icon' => 'fas fa-graduation-cap',
                 'position' => $item[3],
                 'status' => 1
             ]

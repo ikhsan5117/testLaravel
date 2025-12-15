@@ -19,11 +19,12 @@ class LandingSettingController extends Controller
     {
         $request->validate([
             'key' => 'required|string',
-            'type' => 'required|string',
+            'type' => 'required|string|in:text,image,url,json',
             'value' => 'nullable',
             'status' => 'required|boolean'
-            
         ]);
+
+        $value = $request->value;
 
         if ($request->type === 'image' && $request->hasFile('value')) {
             $value = $request->file('value')->store('landing', 'public');
@@ -49,16 +50,26 @@ class LandingSettingController extends Controller
     {
         $setting = LandingSetting::findOrFail($id);
 
-        if ($setting->type == 'image') {
-            $request->validate();
-            $path = $request->file('value')->store('landing', 'public');
-            $setting->value = $path;
-        } else {
-            $request->validate(['value' => 'required']);
-            $setting->value = $request->value;
+        $request->validate([
+            'key' => 'required|string',
+            'type' => 'required|string|in:text,image,url,json',
+            'value' => 'nullable',
+            'status' => 'required|boolean'
+        ]);
+
+        $value = $request->value;
+
+        if ($request->type === 'image' && $request->hasFile('value')) {
+            $value = $request->file('value')->store('landing', 'public');
         }
 
-        $setting->save();
+        $setting->update([
+            'key' => $request->key,
+            'value' => $value,
+            'type' => $request->type,
+            'status' => $request->status,
+        ]);
+
         return redirect()->route('admin.landing.settings.index')->with('success', 'Setting updated successfully');
     }
 }

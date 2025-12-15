@@ -12,6 +12,9 @@ class LandingProgram extends Model
     protected $fillable = [
         'title',
         'description',
+        'label',
+        'url',
+        'group',
         'icon',
         'position',
         'status',

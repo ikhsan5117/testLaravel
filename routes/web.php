@@ -76,9 +76,12 @@ Route::middleware('auth')->group(function () {
         ]);
      Route::resource('navigation', LandingNavController::class)->except(['show']);
     Route::resource('programs', LandingProgramController::class)->except(['show']);
-    Route::resource('footer', LandingFooterController::class)->except(['show']);
-    Route::post('footer/reorder', [LandingFooterController::class, 'reorder'])->name('admin.landing.footer.reorder');
-    Route::patch('footer/{id}/status', [LandingFooterController::class, 'toggleStatus'])->name('admin.landing.footer.toggleStatus');
+    Route::get('footer', [LandingFooterController::class, 'index'])->name('footer.index');
+    Route::post('footer', [LandingFooterController::class, 'store'])->name('footer.store');
+    Route::put('footer/{id}', [LandingFooterController::class, 'update'])->name('footer.update');
+    Route::delete('footer/{id}', [LandingFooterController::class, 'destroy'])->name('footer.destroy');
+    Route::post('footer/reorder', [LandingFooterController::class, 'reorder'])->name('footer.reorder');
+    Route::patch('footer/{id}/status', [LandingFooterController::class, 'toggleStatus'])->name('footer.toggleStatus');
 
 });
 

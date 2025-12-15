@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- konten : title -->
     <title>LP3I - Kampus Vokasi Terbaik</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-white text-gray-800">
 
@@ -15,9 +15,11 @@
             <!-- konten : logo -->
             <h1 class="text-2xl font-bold text-blue-600">LP3I</h1>
             <!-- konten : navbar -->
-            <nav class="hidden md:flex gap-8 text-gray-700 font-medium">
+            <nav class="hidden md:flex gap-8 text-gray-700 font-medium" x-data="navHighlight()">
                 @foreach ($navigation as $nav)
-                <a herf="{{ $nav->url }}" class="hover:text-blue-600">
+                <a href="{{ $nav->url }}"
+                   :class="activeSection === '{{ str_replace('#', '', $nav->url) }}' ? 'text-blue-600 font-semibold' : 'hover:text-blue-600'"
+                   @click="scrollToSection('{{ str_replace('#', '', $nav->url) }}')">
                     {{ $nav->label }}
                 </a>
                 @endforeach
@@ -76,7 +78,7 @@
             <!-- Image -->
             <div class="flex justify-center">
                 <!-- konten : banner image -->
-            <img src="{{ asset('uploads/' . ($landing['hero_image'] ?? 'default-hero.png')) }}" alt="Mahasiswa LP3I" class="w-full max-w-2xl object-cover rounded-xl shadow-lg" />
+            <img src="{{ asset('storage/' . ($landing['hero_image'] ?? 'landing/default-hero.png')) }}" alt="Mahasiswa LP3I" class="w-full max-w-2xl object-cover rounded-xl shadow-lg" />
         </div>
         </div>
     </section>
@@ -90,8 +92,16 @@
            <div class="grid md:grid-cols-3 gap-8">
             @foreach($programs as $program)
                 <div class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-lg transition">
-                    <h4 class="text-xl font-semibold mb-3">{{ $program->name }}</h4>
-                    <p class="text-gray-600">{{ $program->description }}</p>
+                    @if($program->icon)
+                        <div class="text-4xl text-blue-600 mb-4">
+                            <i class="{{ $program->icon }}"></i>
+                        </div>
+                    @endif
+                    <h4 class="text-xl font-semibold mb-3">{{ $program->title }}</h4>
+                    <p class="text-gray-600 mb-4">{{ $program->description }}</p>
+                    @if($program->url)
+                        <a href="{{ $program->url }}" class="text-blue-600 hover:text-blue-800 font-medium">Pelajari Lebih Lanjut →</a>
+                    @endif
                 </div>
             @endforeach
             </div>
@@ -132,7 +142,7 @@
                 <h4 class="text-xl font-semibold mb-3">Navigasi</h4>
                 <ul class="space-y-2 text-gray-100">
                     @foreach ($footerNav as $itemNav)
-                    <li><a herf="{{ $itemNav->url }}" class="hover:underline">
+                    <li><a href="{{ $itemNav->url }}" class="hover:underline">
                         {{ $itemNav->label }}
                     </a></li>
                     @endforeach
@@ -154,3 +164,40 @@
 
 </body>
 </html>
+
+<script>
+function navHighlight() {
+    return {
+        activeSection: 'beranda',
+        init() {
+            this.updateActiveSection();
+            window.addEventListener('scroll', () => {
+                this.updateActiveSection();
+            });
+        },
+        updateActiveSection() {
+            const sections = ['beranda', 'program', 'tentang', 'kontak'];
+            let current = 'beranda';
+
+            for (const section of sections) {
+                const element = document.getElementById(section);
+                if (element) {
+                    const rect = element.getBoundingClientRect();
+                    if (rect.top <= 100 && rect.bottom >= 100) {
+                        current = section;
+                        break;
+                    }
+                }
+            }
+
+            this.activeSection = current;
+        },
+        scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    }
+}
+</script>

@@ -21,8 +21,8 @@
 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm: rounded-lg">
 <div class="p-6 text-gray-900 dark:text-gray-100">
 
-    <div class="filex justfy-between items-center mb-4">
-        <h3 class="font-semibold text-lg">landing Settings</h3>
+    <div class="flex justify-between items-center mb-4">
+        <h3 class="font-semibold text-lg">Landing Settings</h3>
 
     {{--  **Tambah Button** --}}
     <button
@@ -112,7 +112,27 @@
                 <label class="block font-medium mb-1">Key</label>
                 <input type="text" name="key"
                        class="w-full border rounded px-3 py-2"
-                       x-model="setting.key">
+                       x-model="setting.key" required>
+            </div>
+
+            <div class="mb-4">
+                <label class="block font-medium mb-1">Type</label>
+                <select name="type" class="w-full border rounded px-3 py-2"
+                        x-model="setting.type" required>
+                    <option value="text">Text</option>
+                    <option value="image">Image</option>
+                    <option value="url">URL</option>
+                    <option value="json">JSON</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label class="block font-medium mb-1">Status</label>
+                <select name="status" class="w-full border rounded px-3 py-2"
+                        x-model="setting.status" required>
+                    <option value="1">Active</option>
+                    <option value="0">Inactive</option>
+                </select>
             </div>
 
             <template x-if="setting && setting.type == 'image'">
